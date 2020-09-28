@@ -15,7 +15,7 @@ Lo que continua debajo del documento corresponde al desarrollo de la solución s
 
 ## Alcances y Suposiciones
 - El sistema considera una sola lista de actividades. Dicho de otro modo, no aborda la creación de diferentes listas de actividades para diferentes proyectos.
-- El sistema considera que el peso de una tarea (el esfuerzo) es igual para todos. Dicho de otro modo, cada tarea equivale a una sola "unidad de esfuerzo". Esto para la asignación automática en base al usuario menos sobrecargado en cuanto a tareas.
+- El sistema considera que el peso de una tarea (el esfuerzo) es igual para todos. Dicho de otro modo, cada tarea equivale a una sola "unidad de esfuerzo".
 - El sistema no aborda la fecha de inicio y termino de una tarea, ni tampoco de su duración en horas.
 - El sistema considera al usuario menos sobrecargado como al usuario con la menor cantidad de tareas.
 - Una tarea puede ser asignada a varios usuarios.
