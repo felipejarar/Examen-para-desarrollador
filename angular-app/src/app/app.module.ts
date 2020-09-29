@@ -7,12 +7,16 @@ import { AppComponent } from './app.component';
 
 
 import { ActivityCardComponent } from './activity-card/activity-card.component';
+import { ActivityCardListComponent } from './activity-card-list/activity-card-list.component';
+import { ActivityBoardComponent } from './activity-board/activity-board.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ActivityCardComponent,
+    ActivityCardListComponent,
+    ActivityBoardComponent
   ],
   imports: [
     BrowserModule,
