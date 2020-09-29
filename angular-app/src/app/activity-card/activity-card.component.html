@@ -1,1 +1,19 @@
-<p>activity-card works!</p>
+<div class="card" style="width: 18rem;" 
+    (mouseover)="OnMouseEnterBehaviour()"
+    (mouseout)="OnMouseLeaveBehaviour()">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm">
+                <h5 class="card-title">Lorem Ipsum Dolor Lorem Ipsum Dolor</h5>
+            </div>
+            <div class="col-sm">
+                <button *ngIf="displayOptionsButton" class="btn"><mat-icon> 3d_rotation </mat-icon></button>
+            </div>
+        </div>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <mat-icon> 3d_rotation </mat-icon>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
