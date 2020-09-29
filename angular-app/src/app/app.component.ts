@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Activity } from './activity-card/activity';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-app';
+
+  test_activity = new Activity();
+  
+
 }
