@@ -11,6 +11,7 @@ import { ActivityCardListComponent } from './activity-card-list/activity-card-li
 import { BoardSidebarComponent } from './board-sidebar/board-sidebar.component';
 import { BoardComponent } from './board/board.component';
 import { BoardNavbarComponent } from './board-navbar/board-navbar.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { BoardNavbarComponent } from './board-navbar/board-navbar.component';
     ActivityCardListComponent,
     BoardSidebarComponent,
     BoardComponent,
-    BoardNavbarComponent
+    BoardNavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
