@@ -13,8 +13,7 @@ export class BoardNavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openNav(): void {
-    console.log("OPEN");
+  openSideBar(): void {
     this._sidebarInteractionService.setOpenStatus(true);
   }
 
