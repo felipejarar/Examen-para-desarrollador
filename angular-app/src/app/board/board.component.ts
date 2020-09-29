@@ -1,16 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { BordSidebarInteractionService } from './bord-sidebar-interaction.service'
 
 @Component({
-  selector: 'app-activity-board',
-  templateUrl: './activity-board.component.html',
-  styleUrls: ['./activity-board.component.css']
+  selector: 'app-board',
+  templateUrl: './board.component.html',
+  styleUrls: ['./board.component.css']
 })
-export class ActivityBoardComponent implements OnInit {
+export class BoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _sidebarInteractionService: BordSidebarInteractionService) { }
 
   ngOnInit(): void {
+    this._sidebarInteractionService.openStatus$.subscribe(
+      status => {
+        if (status){
+          this.openNav();
+        } else{
+          this.closeNav();
+        }
+      }
+    )
   }
+
 
   /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
   openNav() {

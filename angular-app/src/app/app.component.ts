@@ -8,8 +8,4 @@ import { Activity } from './activity-card/activity';
 })
 export class AppComponent {
   title = 'angular-app';
-
-  test_activity = new Activity();
-  
-
 }
