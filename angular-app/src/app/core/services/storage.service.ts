@@ -6,6 +6,7 @@ import {User} from "../models/user.model";
 @Injectable({
   providedIn: 'root'
 })
+// Service for managing the token and user that are stored after a login
 export class StorageService {
 
   private localStorageService;
