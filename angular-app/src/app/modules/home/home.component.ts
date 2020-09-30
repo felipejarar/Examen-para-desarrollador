@@ -6,11 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  loading = false;
 
   constructor() { }
 
   ngOnInit() {
-      this.loading = true;
+    
   }
+
 }

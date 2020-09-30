@@ -8,20 +8,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Main Components
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './modules/login/login.component';
+import { HomeComponent } from './modules/home/home.component';
 
 // Subcomponets
 import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { ActivityCardListComponent } from './activity-card-list/activity-card-list.component';
 import { BoardSidebarComponent } from './board-sidebar/board-sidebar.component';
 import { BoardComponent } from './board/board.component';
-import { BoardNavbarComponent } from './board-navbar/board-navbar.component';
 
 // Interceptors
 import { ErrorInterceptor } from './core/helper/error.interceptor';
 import { fakeBackendProvider } from './core/helper/fake-backend';
 import { JwtInterceptor } from './core/helper/jwt.interceptor';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
  
 @NgModule({
@@ -34,7 +34,7 @@ import { JwtInterceptor } from './core/helper/jwt.interceptor';
     ActivityCardListComponent,
     BoardSidebarComponent,
     BoardComponent,
-    BoardNavbarComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
