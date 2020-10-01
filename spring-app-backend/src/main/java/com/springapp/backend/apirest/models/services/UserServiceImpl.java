@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.springapp.backend.apirest.models.dao.IUserDAO;
 import com.springapp.backend.apirest.models.entity.User;
 
-@Service
+@Service 
 public class UserServiceImpl implements IUserService{
 
 	@Autowired

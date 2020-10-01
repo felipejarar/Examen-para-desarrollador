@@ -8,5 +8,10 @@ public interface ITaskService {
 	
 	public List<Task> findAll();
 	
-
+	public Task save(Task t);
+	
+	public Task update(Task t);
+	
+	public void deleteById(Long id);
+	
 }
