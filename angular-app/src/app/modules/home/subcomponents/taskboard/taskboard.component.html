@@ -1,0 +1,119 @@
+<div class="container mt-3 mb-3">
+
+    <nav class="navbar justify-content-between">
+        <h1 class="navbar-brand">Listado de tareas</h1>
+        <div name="right-group">
+          <button  type="button" 
+            class="btn btn-outline-primary"
+            data-toggle="modal" 
+            data-target="#newTaskModal">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i> Nueva Tarea
+            </button>
+        </div>
+    </nav>
+
+    <div class="row">
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Status</th>
+              <th scope="col">Assignees</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task  of tasks">
+              <th scope="row">
+                {{task.title}}
+              </th>
+              <td>
+                {{task.status}}
+              </td>
+              <td>
+                {{formatAssigneesColumn(task.assignees)}}
+              </td>
+              <td>
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                  <button 
+                    type="button" 
+                    class="btn btn-outline-secondary mr-2 rounded"
+                    data-toggle="modal" 
+                    data-target="#editTaskModal"
+                    (click)="editTask(task.id)">
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                  </button>
+                  <button 
+                    type="button" 
+                    class="btn btn-outline-secondary mr-2 rounded"
+                    data-toggle="modal" 
+                    data-target="#deleteTaskModal"
+                    (click)="removeTask(task.id)">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+
+  </div>
+
+
+<!-- Modal: New Task-->
+<div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-labelledby="newTaskModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar nueva tarea</h5>
+        <button #closeNewTaskModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-new-task-form (onSubmission)="onNewTaskSubmit()"></app-new-task-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Edit Task-->
+<div *ngIf="selectedTask !== null" class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar tarea</h5>
+        <button #closeEditTaskModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-edit-task-form (onSubmission)="onEditTaskSubmit()" [task]="selectedTask"></app-edit-task-form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Alert-->
+<div *ngIf="selectedTask !== null" class="modal fade" id="deleteTaskModal" tabindex="-1" role="dialog" aria-labelledby="deleteTaskModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Advertencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Estás a punto de eliminar la siguiente tarea: <b>"{{selectedTask.title}}"</b>. ¿Estás seguro de que quieres continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Sacame de aquí</button>
+        <button type="button" class="btn btn-danger" (click)="confirmRemoval()" data-dismiss="modal" >Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,36 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label for="title">Titulo</label>
+    <input type="text" 
+      class="form-control"
+      formControlName="title"  
+      [ngClass]="{ 'is-invalid': form_submitted && f.title.errors }" 
+      placeholder="Ingresar titulo...">
+    <div *ngIf="form_submitted && f.title.errors" class="invalid-feedback">
+      <div *ngIf="f.title.errors.required">Titulo es obligatorio</div>
+    </div>    
+  </div>
+
+  <div class="form-group">
+    <label for="description">Descripción</label>
+    <textarea rows="5"
+      class="form-control" 
+      formControlName="description" 
+      placeholder="Ingresar descripción...">
+    </textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="assignees">Responsables (CTRL para selección multiple)</label>
+    <select multiple 
+      class="form-control" 
+      formControlName="assignees">
+        <option *ngFor="let user of data_users" [value]="user.id">
+          {{ user.username }}
+        </option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary pull-right">Confirmar</button>
+</form>

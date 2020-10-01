@@ -11,17 +11,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './modules/login/login.component';
 import { HomeComponent } from './modules/home/home.component';
 
-// Subcomponets
-import { ActivityCardComponent } from './activity-card/activity-card.component';
-import { ActivityCardListComponent } from './activity-card-list/activity-card-list.component';
-import { BoardSidebarComponent } from './board-sidebar/board-sidebar.component';
-import { BoardComponent } from './board/board.component';
-
 // Interceptors
 import { ErrorInterceptor } from './core/helper/error.interceptor';
 import { fakeBackendProvider } from './core/helper/fake-backend';
 import { JwtInterceptor } from './core/helper/jwt.interceptor';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { TaskboardComponent } from './modules/home/subcomponents/taskboard/taskboard.component';
+import { NewTaskFormComponent } from './modules/home/subcomponents/new-task-form/new-task-form.component';
+import { EditTaskFormComponent } from './modules/home/subcomponents/edit-task-form/edit-task-form.component';
 
  
 @NgModule({
@@ -29,12 +26,10 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
-
-    ActivityCardComponent,
-    ActivityCardListComponent,
-    BoardSidebarComponent,
-    BoardComponent,
-    NavbarComponent
+    NavbarComponent,
+    TaskboardComponent,
+    NewTaskFormComponent,
+    EditTaskFormComponent
   ],
   imports: [
     BrowserModule,

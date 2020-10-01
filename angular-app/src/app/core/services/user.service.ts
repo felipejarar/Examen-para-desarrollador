@@ -10,6 +10,6 @@ export class UserService {
 
     // Get all Users
     getAll() {
-        return this.http.get<User[]>('${environment.apiUrl}/users');
+        return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }
 }
