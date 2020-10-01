@@ -23,35 +23,5 @@ Lo que continua debajo del documento corresponde al desarrollo de la solución s
 - Los usuarios sin permiso de escritura (write_access = false) están limitados a visualizar tareas.
 - Los estados de una tarea son: TODO (status = 0), IN PROGRESS (status = 1), DONE (status = 2).
 
-## Historias de usuario
 
-### Login de usuario
-Como un usuario no autenticado del sistema, quiero ingresar a la aplicación mediante la declaración de mis credenciales de usuario (nombre de usuario y contraseña) en un formulario de login. 
-Esto de acuerdo a los siguientes criterios de aceptación: 
-- Success
-  - Asumiendo que las credenciales sean válidas (username y password pertenecen a un usuario), el sistema debe autenticar al usuario y redirigirlo a la página principal de la aplicación
-- Failure
-  - Asumiendo que las credenciales sean no válidas, el sistema debe desplegar un mensaje de error anunciando que el nombre de usuario y la contraseña no coinciden.
 
-# Esquema de los datos
-
-## Usuario
-
-```
-user = {
-  username: string,
-  password: string,
-  write_access: boolean
-}
-```
-
-## Tarea
-
-```
-task = {
-  taskname: string,
-  description: string,
-  status: number,
-  users : [ user 1, user 2, ..., user n]
-}
-```
