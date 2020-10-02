@@ -2,12 +2,14 @@ package com.springapp.backend.apirest.models.services;
 
 import java.util.List;
 
-import com.springapp.backend.apirest.models.dto.UserEntry;
+import com.springapp.backend.apirest.models.dto.UserProjection;
+import com.springapp.backend.apirest.models.entity.User;
 
 public interface IUserService {
 
-	public List<UserEntry> findAllIdsAndUsernames();
+	public List<UserProjection> findAllProjectedBy();
 	
-	public UserEntry matchUsernameAndPassword(String name, String pass);
+	public UserProjection findPagedProjectedByUsernameAndPassword(String name, String pass);
 
+	public User findAllSortedByTaskCountDesc();
 }

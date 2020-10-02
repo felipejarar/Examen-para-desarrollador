@@ -1,8 +1,7 @@
 package com.springapp.backend.apirest.controllers;
 
+import java.util.HashSet;
 import java.util.List;
-
-import javax.persistence.Tuple;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springapp.backend.apirest.models.entity.Task;
-import com.springapp.backend.apirest.models.dto.TaskEntry;
+import com.springapp.backend.apirest.models.dto.TaskProjection;
 import com.springapp.backend.apirest.models.services.ITaskService;
+import com.springapp.backend.apirest.models.services.IUserService;
 
 @CrossOrigin
 @RestController
@@ -30,9 +30,13 @@ public class TaskRestController {
 	@Autowired
 	private ITaskService taskService;
 	
+	@Autowired
+	private IUserService userService;
+	
+	// GET ALL TASKS
 	@GetMapping("/tasks")
 	public ResponseEntity<?> index(){
-		List<Task> entries = taskService.findAll();
+		List<TaskProjection> entries = taskService.findAll();
 		return (entries == null || entries.isEmpty())?
 			ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body("No task found") :
@@ -40,8 +44,12 @@ public class TaskRestController {
 				.body(entries);	
 	}
 	
+	// CREATE TASK
 	@PostMapping("/tasks")
 	public ResponseEntity<?> create(@RequestBody Task task){
+		if (task.getAssignees() == null || task.getAssignees().size() == 0)
+			task.setAssignees(new HashSet<>());
+			task.getAssignees().add(userService.findAllSortedByTaskCountDesc());
 		Task entry = taskService.save(task);
 		return (entry == null)?
 			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -49,6 +57,7 @@ public class TaskRestController {
 			ResponseEntity.status(HttpStatus.OK)
 				.body(entry);	
 	}
+	
 	
 	@PutMapping("/tasks/{id}")
 	public ResponseEntity<?> update(@RequestBody Task task, @PathVariable Long id){

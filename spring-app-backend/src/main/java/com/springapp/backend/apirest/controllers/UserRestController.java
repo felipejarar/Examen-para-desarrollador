@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springapp.backend.apirest.models.dto.UserEntry;
+import com.springapp.backend.apirest.models.dto.UserProjection;
 import com.springapp.backend.apirest.models.services.IUserService;
 
 @CrossOrigin
@@ -26,7 +26,7 @@ public class UserRestController {
 	
 	@GetMapping("/users")
 	public ResponseEntity<?> index(){
-		List<UserEntry> entries = userService.findAllIdsAndUsernames();
+		List<UserProjection> entries = userService.findAllProjectedBy();
 		return (entries == null || entries.isEmpty())?
 			ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body("No username found") :
@@ -34,8 +34,10 @@ public class UserRestController {
 				.body(entries);
 	}
 	
-@PostMapping("/authentication")
-public ResponseEntity<?> authenticate(@RequestBody Map<String, String> body)
+	
+	
+	@PostMapping("/authentication")
+	public ResponseEntity<?> authenticate(@RequestBody Map<String, String> body)
 	{		
 		String name = (body.containsKey("username"))? body.get("username") : "";
 		String pass = (body.containsKey("password"))? body.get("password") : "";
@@ -44,7 +46,7 @@ public ResponseEntity<?> authenticate(@RequestBody Map<String, String> body)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body("'Username' and 'Password' are required");
 		
-		UserEntry entry = userService.matchUsernameAndPassword(name, pass);
+		UserProjection entry = userService.findPagedProjectedByUsernameAndPassword(name, pass);
 		
 		return (entry == null)? 
 			ResponseEntity.status(HttpStatus.NOT_FOUND)

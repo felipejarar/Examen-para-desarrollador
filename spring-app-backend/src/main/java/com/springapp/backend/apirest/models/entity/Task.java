@@ -7,23 +7,33 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.springapp.backend.apirest.models.dao.UserRepository;
+import com.springapp.backend.apirest.models.services.IUserService;
+import com.springapp.backend.apirest.models.services.UserServiceImpl;
 import com.sun.istack.NotNull;
 
 @Entity
 @Table(name="tasks")
 public class Task implements Serializable{
+	
 
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;	
@@ -33,30 +43,37 @@ public class Task implements Serializable{
 	private String title;
 	
 	@Size(max=1024)
+    @Column(columnDefinition = "varchar(1024) default ''")
 	private String description;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 		name = "task_assignees",
 		joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name ="user_id", referencedColumnName = "id"))
 	private Set<User> assignees;
 	
-	@NotNull
 	@Size(max=32)
 	@Column(columnDefinition = "varchar(32) default 'TODO'")
 	private String status;
-	
 	
 	@Column(name="create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;	
 	
-	@NotNull
     @Column(columnDefinition = "boolean default true")
 	private Boolean isActive;
 	
-
+	@PreUpdate
+	@PrePersist
+	public void initializeAssigneesIfEmpty() {
+		if (this.assignees == null || this.assignees.isEmpty()) {
+			// Select the assignee with the less tasks assigned 
+			//User u = userService.findAllSortedByTaskCountDesc();
+			//this.assignees.add(u);
+		}	
+	}
+	
 	public Long getId() {
 		return id;
 	}
