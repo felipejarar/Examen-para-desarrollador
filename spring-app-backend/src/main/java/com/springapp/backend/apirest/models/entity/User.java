@@ -13,12 +13,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name="users")
+@Table(name ="users")
 public class User implements Serializable{
 
 	@Id
@@ -33,7 +34,7 @@ public class User implements Serializable{
 	@Size(max=128)
 	private String password;
 	
-	@Column(name="create_at")
+	@Column(name="create_at", unique=true)
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	

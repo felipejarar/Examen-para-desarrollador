@@ -2,9 +2,12 @@ package com.springapp.backend.apirest.models.services;
 
 import java.util.List;
 
-import com.springapp.backend.apirest.models.entity.User;
+import com.springapp.backend.apirest.models.dto.UserEntry;
 
 public interface IUserService {
 
-	public List<User> findAll();
+	public List<UserEntry> findAllIdsAndUsernames();
+	
+	public UserEntry matchUsernameAndPassword(String name, String pass);
+
 }
