@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,66 +16,69 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.springapp.backend.apirest.models.dao.UserRepository;
-import com.springapp.backend.apirest.models.services.IUserService;
-import com.springapp.backend.apirest.models.services.UserServiceImpl;
-import com.sun.istack.NotNull;
 
 @Entity
 @Table(name="tasks")
 public class Task implements Serializable{
 	
+	public static enum Status{
+		TO_DO,
+		IN_PROGRESS,
+		DONE
+	}
 
-	
+	// Identifier of the task
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
 	
-	@NotNull
+	// Task's Board	(Board contains a list of tasks)
+	@ManyToOne(targetEntity = Board.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_board")
+	private Board board;
+	
+	// Task's Assignees
+	@ManyToMany(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "task_assignees",
+		joinColumns = @JoinColumn(name = "fk_task", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name ="fk_user", referencedColumnName = "id"))
+	private Set<User> assignees;	
+
+	// Title of the task
+	@NotEmpty
 	@Size(max=128)
 	private String title;
 	
+	// Description of the task
 	@Size(max=1024)
     @Column(columnDefinition = "varchar(1024) default ''")
 	private String description;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(
-		name = "task_assignees",
-		joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name ="user_id", referencedColumnName = "id"))
-	private Set<User> assignees;
+	// Status of the task
+	@Enumerated(EnumType.STRING)
+	private Status status;
 	
-	@Size(max=32)
-	@Column(columnDefinition = "varchar(32) default 'TODO'")
-	private String status;
-	
-	@Column(name="create_at")
+	// Date of creation of the task
+	@Column(name="created_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;	
 	
+	// Visibility of the task 
     @Column(columnDefinition = "boolean default true")
 	private Boolean isActive;
-	
-	@PreUpdate
-	@PrePersist
-	public void initializeAssigneesIfEmpty() {
-		if (this.assignees == null || this.assignees.isEmpty()) {
-			// Select the assignee with the less tasks assigned 
-			//User u = userService.findAllSortedByTaskCountDesc();
-			//this.assignees.add(u);
-		}	
-	}
-	
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Long getId() {
 		return id;
 	}
@@ -81,6 +86,7 @@ public class Task implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public String getTitle() {
 		return title;
@@ -98,42 +104,34 @@ public class Task implements Serializable{
 		this.description = description;
 	}
 
-	public Set<User> getAssignees() {
-		return assignees;
-	}
-
-	public void setAssignees(Set<User> assignees) {
-		this.assignees = assignees;
-	}
-
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
+
 	public Date getCreateAt() {
 		return createAt;
 	}
-	
+
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 
-	public Boolean isActive() {
+	public Boolean getIsActive() {
 		return isActive;
 	}
 
-	public void setActive(Boolean isActive) {
+	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
 }

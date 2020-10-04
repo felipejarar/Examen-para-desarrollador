@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,25 +23,43 @@ import com.sun.istack.NotNull;
 @Table(name ="users")
 public class User implements Serializable{
 
+	// Identifier of the user
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
+	// User's tasks (as an assignee of the task)
+	@ManyToMany(targetEntity = Task.class, fetch = FetchType.LAZY, mappedBy = "assignees")
+	private Set<Task> tasks;
+	
+	// An user can view or manage many boards
+	@OneToMany(targetEntity = BoardCollaboratorEnrollment.class, mappedBy="collaborator")
+	private Set<BoardCollaboratorEnrollment> boardEnrollments;
+	
+	// Username of the user
 	@NotNull
-	@Size(max=128)
+	@Size(min=4, max=128)
 	private String username;
 	
+	// Password of the user
 	@NotNull
 	@Size(max=128)
 	private String password;
 	
-	@Column(name="create_at", unique=true)
+	// Date of creation of the user
+	@Column(name="created_at", unique=true)
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "assignees")
-	private Set<Task> tasks;
-	
+	// Visibility of the user
+    @Column(columnDefinition = "boolean default true")
+	private Boolean isActive;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Long getId() {
 		return id;
 	}
@@ -48,7 +67,8 @@ public class User implements Serializable{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+
 	public String getUsername() {
 		return username;
 	}
@@ -73,9 +93,18 @@ public class User implements Serializable{
 		this.createAt = createAt;
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 
 }
